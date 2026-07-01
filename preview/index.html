@@ -1,0 +1,964 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI x 计算生物学</title>
+    <style>
+      :root {
+        --bg: #090b0f;
+        --panel: rgba(255, 255, 255, 0.055);
+        --panel-strong: rgba(255, 255, 255, 0.085);
+        --line: rgba(255, 255, 255, 0.11);
+        --line-blue: rgba(81, 151, 255, 0.42);
+        --text: #f6f7fb;
+        --muted: #a8afbd;
+        --dim: #747d8d;
+        --blue: #5c9dff;
+        --blue-soft: rgba(92, 157, 255, 0.13);
+        --max: 1180px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        background:
+          linear-gradient(rgba(255, 255, 255, 0.024) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.024) 1px, transparent 1px),
+          linear-gradient(180deg, #0b0e13 0%, var(--bg) 100%);
+        background-size: 64px 64px, 64px 64px, auto;
+        color: var(--text);
+        font-family:
+          ui-sans-serif,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          sans-serif;
+        letter-spacing: 0;
+        overflow-x: hidden;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .shell {
+        position: relative;
+        min-height: 100vh;
+      }
+
+      .nav {
+        position: fixed;
+        z-index: 20;
+        top: 18px;
+        left: 50%;
+        display: flex;
+        max-width: calc(100vw - 24px);
+        transform: translateX(-50%);
+        align-items: center;
+        gap: 4px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        background: rgba(12, 15, 21, 0.72);
+        padding: 7px;
+        box-shadow: 0 12px 34px rgba(0, 0, 0, 0.2);
+      }
+
+      .brand,
+      .nav a {
+        white-space: nowrap;
+        border-radius: 999px;
+        padding: 10px 13px;
+        font-size: 13px;
+        color: var(--muted);
+        transition:
+          color 180ms ease,
+          background 180ms ease;
+      }
+
+      .brand {
+        color: var(--text);
+        font-weight: 700;
+      }
+
+      .nav a.active,
+      .nav a:hover {
+        background: rgba(255, 255, 255, 0.08);
+        color: var(--text);
+      }
+
+      .container {
+        width: min(var(--max), calc(100% - 40px));
+        margin: 0 auto;
+      }
+
+      section {
+        padding: 108px 0;
+        scroll-margin-top: 92px;
+      }
+
+      .hero {
+        min-height: 100dvh;
+        display: grid;
+        align-items: center;
+        padding-top: 92px;
+        padding-bottom: 54px;
+      }
+
+      .hero-inner {
+        display: grid;
+        grid-template-columns: minmax(0, 1.14fr) minmax(320px, 0.86fr);
+        gap: 64px;
+        align-items: center;
+      }
+
+      .eyebrow {
+        margin: 0 0 18px;
+        color: var(--blue);
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 12px;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+      }
+
+      h1,
+      h2,
+      h3,
+      p {
+        margin: 0;
+      }
+
+      h1 {
+        max-width: 830px;
+        font-size: clamp(48px, 7vw, 92px);
+        line-height: 1.02;
+        font-weight: 760;
+      }
+
+      h2 {
+        max-width: 800px;
+        font-size: clamp(34px, 4.8vw, 58px);
+        line-height: 1.07;
+        font-weight: 720;
+      }
+
+      h3 {
+        font-size: 24px;
+        line-height: 1.2;
+      }
+
+      .lead {
+        max-width: 660px;
+        margin-top: 28px;
+        color: var(--muted);
+        font-size: 19px;
+        line-height: 1.65;
+      }
+
+      .actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-top: 34px;
+      }
+
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 46px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 0 18px;
+        background: rgba(255, 255, 255, 0.055);
+        color: var(--text);
+        font-size: 14px;
+        font-weight: 650;
+        transition:
+          transform 180ms ease,
+          border-color 180ms ease,
+          background 180ms ease;
+      }
+
+      .button.primary {
+        border-color: rgba(92, 157, 255, 0.75);
+        background: #4f90ea;
+      }
+
+      .button:hover {
+        transform: translateY(-2px);
+        border-color: var(--line-blue);
+        background: rgba(255, 255, 255, 0.085);
+      }
+
+      .button.primary:hover {
+        background: #68a6ff;
+      }
+
+      .system-panel,
+      .card,
+      .project,
+      .note,
+      .publication,
+      .contact-card {
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        background: linear-gradient(180deg, var(--panel-strong), var(--panel));
+        box-shadow: 0 12px 34px rgba(0, 0, 0, 0.2);
+      }
+
+      .system-panel {
+        position: relative;
+        overflow: hidden;
+        padding: 26px;
+      }
+
+      .system-panel::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(135deg, rgba(92, 157, 255, 0.16), transparent 38%),
+          repeating-linear-gradient(
+            90deg,
+            transparent 0 46px,
+            rgba(255, 255, 255, 0.035) 46px 47px
+          );
+        pointer-events: none;
+      }
+
+      .system-panel > * {
+        position: relative;
+      }
+
+      .panel-top {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 20px;
+        margin-bottom: 28px;
+      }
+
+      .status-pill,
+      .tag {
+        display: inline-flex;
+        align-items: center;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 7px 10px;
+        color: var(--muted);
+        font-size: 12px;
+        line-height: 1;
+        white-space: nowrap;
+      }
+
+      .status-pill {
+        border-color: var(--line-blue);
+        color: var(--blue);
+      }
+
+      .node-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 12px;
+      }
+
+      .node {
+        min-height: 78px;
+        display: flex;
+        align-items: flex-end;
+        border: 1px solid rgba(255, 255, 255, 0.095);
+        border-radius: 14px;
+        background: rgba(255, 255, 255, 0.045);
+        padding: 14px;
+        color: var(--text);
+        font-size: 14px;
+      }
+
+      .section-copy {
+        max-width: 720px;
+        margin-top: 20px;
+        color: var(--muted);
+        font-size: 18px;
+        line-height: 1.72;
+      }
+
+      .about-grid,
+      .stack-grid,
+      .note-grid,
+      .contact-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 16px;
+        margin-top: 44px;
+      }
+
+      .card,
+      .note,
+      .publication,
+      .contact-card {
+        padding: 24px;
+      }
+
+      .card p,
+      .note p {
+        margin-top: 14px;
+        color: var(--muted);
+        line-height: 1.68;
+      }
+
+      .projects {
+        display: grid;
+        gap: 18px;
+        margin-top: 44px;
+      }
+
+      .project {
+        display: grid;
+        grid-template-columns: minmax(0, 1.05fr) minmax(280px, 0.95fr);
+        gap: 34px;
+        padding: 28px;
+        transition:
+          transform 180ms ease,
+          border-color 180ms ease;
+      }
+
+      .publications {
+        display: grid;
+        gap: 14px;
+        margin-top: 44px;
+      }
+
+      .publication {
+        display: grid;
+        grid-template-columns: 64px minmax(0, 1fr) minmax(180px, 0.3fr);
+        gap: 22px;
+        padding: 24px;
+        transition:
+          transform 180ms ease,
+          border-color 180ms ease;
+      }
+
+      .publication:hover {
+        transform: translateY(-3px);
+        border-color: var(--line-blue);
+      }
+
+      .publication-index {
+        color: var(--blue);
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 14px;
+      }
+
+      .publication-title {
+        font-size: 22px;
+        line-height: 1.35;
+        font-weight: 730;
+      }
+
+      .publication-description {
+        margin-top: 12px;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      .project:hover,
+      .card:hover,
+      .note:hover,
+      .contact-card:hover {
+        transform: translateY(-3px);
+        border-color: var(--line-blue);
+      }
+
+      .project .summary {
+        margin-top: 16px;
+        color: var(--muted);
+        font-size: 18px;
+        line-height: 1.62;
+      }
+
+      .label {
+        margin-top: 22px;
+        color: var(--text);
+        font-size: 14px;
+        font-weight: 700;
+      }
+
+      .body {
+        margin-top: 8px;
+        color: var(--muted);
+        line-height: 1.65;
+      }
+
+      .tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 22px;
+      }
+
+      .preview-window {
+        min-height: 280px;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 16px;
+        background:
+          linear-gradient(145deg, rgba(92, 157, 255, 0.16), transparent 34%),
+          #0d1118;
+        padding: 18px;
+      }
+
+      .preview-bar {
+        width: 110px;
+        height: 10px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.12);
+      }
+
+      .preview-block {
+        height: 120px;
+        margin-top: 20px;
+        border-radius: 14px;
+        background: rgba(255, 255, 255, 0.07);
+      }
+
+      .preview-mini {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+        margin-top: 12px;
+      }
+
+      .preview-mini span {
+        height: 56px;
+        border-radius: 12px;
+        background: rgba(255, 255, 255, 0.06);
+      }
+
+      .timeline {
+        position: relative;
+        display: grid;
+        gap: 14px;
+        margin-top: 44px;
+      }
+
+      .timeline::before {
+        content: "";
+        position: absolute;
+        top: 18px;
+        bottom: 18px;
+        left: 10px;
+        width: 1px;
+        background: linear-gradient(var(--line-blue), rgba(255, 255, 255, 0.06));
+      }
+
+      .timeline-item {
+        position: relative;
+        padding-left: 42px;
+      }
+
+      .timeline-item::before {
+        content: "";
+        position: absolute;
+        left: 2px;
+        top: 24px;
+        width: 17px;
+        height: 17px;
+        border: 1px solid var(--line-blue);
+        border-radius: 999px;
+        background: #10141c;
+      }
+
+      .timeline-card {
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.045);
+        padding: 22px;
+      }
+
+      .timeline-card p {
+        margin-top: 12px;
+        color: var(--muted);
+        line-height: 1.66;
+      }
+
+      .workflow {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 12px;
+        margin-top: 44px;
+        border: 1px solid var(--line);
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.045);
+        padding: 16px;
+      }
+
+      .step {
+        position: relative;
+        min-height: 154px;
+        border: 1px solid rgba(255, 255, 255, 0.09);
+        border-radius: 14px;
+        background: rgba(255, 255, 255, 0.045);
+        padding: 18px;
+      }
+
+      .step::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 18px;
+        right: 18px;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, var(--line-blue), transparent);
+      }
+
+      .step small,
+      .meta {
+        color: var(--blue);
+        font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+        font-size: 11px;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .step p {
+        margin-top: 12px;
+        color: var(--muted);
+        line-height: 1.58;
+      }
+
+      .contact-card {
+        min-height: 160px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      footer {
+        border-top: 1px solid var(--line);
+        padding: 30px 0;
+        color: var(--dim);
+      }
+
+      .footer-inner {
+        display: flex;
+        justify-content: space-between;
+        gap: 18px;
+        font-size: 14px;
+      }
+
+      .reveal {
+        opacity: 0;
+        transform: translateY(18px);
+        transition:
+          opacity 620ms ease,
+          transform 620ms ease;
+      }
+
+      .reveal.visible {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      @media (max-width: 900px) {
+        .nav {
+          overflow-x: auto;
+          justify-content: flex-start;
+        }
+
+        .hero-inner,
+        .project,
+        .publication {
+          grid-template-columns: 1fr;
+        }
+
+        .about-grid,
+        .stack-grid,
+        .note-grid,
+        .contact-grid,
+        .workflow {
+          grid-template-columns: 1fr;
+        }
+
+        section {
+          padding: 82px 0;
+        }
+
+        .hero {
+          padding-top: 104px;
+        }
+
+        h1 {
+          font-size: clamp(42px, 12vw, 62px);
+        }
+      }
+
+      @media (max-width: 560px) {
+        .container {
+          width: min(var(--max), calc(100% - 28px));
+        }
+
+        .brand {
+          display: none;
+        }
+
+        .nav a {
+          padding: 9px 11px;
+          font-size: 12px;
+        }
+
+        .node-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .footer-inner {
+          flex-direction: column;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="shell">
+      <nav class="nav" aria-label="Main navigation">
+        <a class="brand" href="#hero">AI / 生物</a>
+        <a href="#about">关于</a>
+        <a href="#projects">项目</a>
+        <a href="#publications">文章</a>
+        <a href="#research">研究</a>
+        <a href="#stack">技术栈</a>
+        <a href="#workflow">工作流</a>
+        <a href="#notes">随笔</a>
+        <a href="#contact">联系</a>
+      </nav>
+
+      <main>
+        <section id="hero" class="hero">
+          <div class="container hero-inner">
+            <div class="reveal">
+              <p class="eyebrow">AI × 计算生物学</p>
+              <h1>为计算生物学构建 AI 工具。</h1>
+              <p class="lead">
+                我设计 AI 原生的科研软件、自动化工作流与生物信息学工具，让复杂的生物学分析更清晰、更可复现。
+              </p>
+              <div class="actions">
+                <a class="button primary" href="#projects">查看项目</a>
+                <a class="button" href="https://github.com/" target="_blank" rel="noreferrer">GitHub</a>
+                <a class="button" href="#contact">联系我</a>
+              </div>
+            </div>
+
+            <aside class="system-panel reveal" aria-label="System overview">
+              <div class="panel-top">
+                <div>
+                  <p class="meta">系统视角</p>
+                  <p class="body">把科研软件、AI 工具和产品思维放在同一个系统里。</p>
+                </div>
+                <span class="status-pill">持续演进</span>
+              </div>
+              <div class="node-grid">
+                <div class="node">AI 规划</div>
+                <div class="node">科学软件</div>
+                <div class="node">生物学验证</div>
+                <div class="node">自动化</div>
+                <div class="node">记忆系统</div>
+                <div class="node">工作流设计</div>
+              </div>
+            </aside>
+          </div>
+        </section>
+
+        <section id="about">
+          <div class="container">
+            <div class="reveal">
+              <h2>用产品思维做研究工程。</h2>
+              <p class="section-copy">
+                我关注科学软件、AI 系统与研究工程之间的交叉地带。
+              </p>
+            </div>
+            <div class="about-grid">
+              <article class="card reveal">
+                <h3>我如何思考</h3>
+                <p>我喜欢把复杂、零散、依赖人工经验的科研流程，整理成清晰、可验证、可迭代的软件系统。</p>
+              </article>
+              <article class="card reveal">
+                <h3>我在构建什么</h3>
+                <p>AI 辅助科研工具、计算生物学流程、自动化系统，以及能让技术深度更容易被理解的交互界面。</p>
+              </article>
+              <article class="card reveal">
+                <h3>长期方向</h3>
+                <p>我希望参与定义下一代科研软件：既有生物学严谨性，也有工程可维护性，并能与长期记忆型 AI 协作。</p>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section id="projects">
+          <div class="container">
+            <div class="reveal">
+              <h2>核心项目是这个网站的中心。</h2>
+              <p class="section-copy">
+                这些项目体现了我如何做科研软件：明确问题、构建工具，同时保留生物学解释、工程扩展和 AI 协作空间。
+              </p>
+            </div>
+            <div class="projects">
+              <article class="project reveal">
+                <div>
+                  <p class="meta">持续开发</p>
+                  <h3>PhyloTracer</h3>
+                  <p class="summary">面向比较基因组学和系统发育基因组学分析的工具包。</p>
+                  <p class="label">问题</p>
+                  <p class="body">当数据规模、基因树逻辑和人工检查同时增长时，系统发育分析很容易变得难以复现和难以解释。</p>
+                  <p class="label">方向</p>
+                  <p class="body">让进化分析流程更可检查、可复现、可扩展，并为未来 AI 辅助分析留下接口。</p>
+                  <div class="tags">
+                    <span class="tag">Python</span><span class="tag">TypeScript</span><span class="tag">FastAPI</span><span class="tag">Docker</span><span class="tag">Nextflow</span>
+                  </div>
+                  <div class="actions"><a class="button" href="https://github.com/" target="_blank" rel="noreferrer">GitHub</a><a class="button" href="#">详情</a></div>
+                </div>
+                <div class="preview-window"><div class="preview-bar"></div><div class="preview-block"></div><div class="preview-mini"><span></span><span></span><span></span></div></div>
+              </article>
+
+              <article class="project reveal">
+                <div>
+                  <p class="meta">原型阶段</p>
+                  <h3>HaploFinder</h3>
+                  <p class="summary">面向单倍型分析与生物学解释的软件层。</p>
+                  <p class="label">问题</p>
+                  <p class="body">许多序列分析流程会直接输出技术结果，但缺少面向研究解释的结构化表达。</p>
+                  <p class="label">方向</p>
+                  <p class="body">把原始计算结果转化为更容易进入科研判断的生物学线索。</p>
+                  <div class="tags">
+                    <span class="tag">Python</span><span class="tag">Bioinformatics</span><span class="tag">CLI</span><span class="tag">Data Pipelines</span>
+                  </div>
+                  <div class="actions"><a class="button" href="https://github.com/" target="_blank" rel="noreferrer">GitHub</a><a class="button" href="#">详情</a></div>
+                </div>
+                <div class="preview-window"><div class="preview-bar"></div><div class="preview-block"></div><div class="preview-mini"><span></span><span></span><span></span></div></div>
+              </article>
+
+              <article class="project reveal">
+                <div>
+                  <p class="meta">设计中</p>
+                  <h3>AI Workspace</h3>
+                  <p class="summary">用于规划、编码、记录和迭代科研软件的 AI 原生工作空间。</p>
+                  <p class="label">问题</p>
+                  <p class="body">科研工程常常分散在笔记、脚本、提示词、文档和实验结果之间，项目上下文很容易断裂。</p>
+                  <p class="label">方向</p>
+                  <p class="body">探索如何把记忆、工具调用和项目上下文变成科学软件开发中的一等公民。</p>
+                  <div class="tags">
+                    <span class="tag">React</span><span class="tag">TypeScript</span><span class="tag">MCP</span><span class="tag">Codex</span><span class="tag">Claude Code</span>
+                  </div>
+                  <div class="actions"><a class="button" href="https://github.com/" target="_blank" rel="noreferrer">GitHub</a><a class="button" href="#">详情</a></div>
+                </div>
+                <div class="preview-window"><div class="preview-bar"></div><div class="preview-block"></div><div class="preview-mini"><span></span><span></span><span></span></div></div>
+              </article>
+
+              <article class="project reveal">
+                <div>
+                  <p class="meta">实验项目</p>
+                  <h3>Browser Job Agent</h3>
+                  <p class="summary">用于重复网页任务、监控和结构化提取的浏览器智能体。</p>
+                  <p class="label">问题</p>
+                  <p class="body">很多有价值的工作仍然停留在网页界面里，人工重复操作会浪费大量注意力。</p>
+                  <p class="label">方向</p>
+                  <p class="body">作为迈向真实可用智能体的一步，关注跨工具、跨界面的稳定执行能力。</p>
+                  <div class="tags">
+                    <span class="tag">Playwright</span><span class="tag">TypeScript</span><span class="tag">Agents</span><span class="tag">Automation</span>
+                  </div>
+                  <div class="actions"><a class="button" href="https://github.com/" target="_blank" rel="noreferrer">GitHub</a><a class="button" href="#">详情</a></div>
+                </div>
+                <div class="preview-window"><div class="preview-bar"></div><div class="preview-block"></div><div class="preview-mini"><span></span><span></span><span></span></div></div>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section id="publications">
+          <div class="container">
+            <div class="reveal">
+              <h2>参与发表文章</h2>
+              <p class="section-copy">
+                这些科研经历不是简历列表，而是我构建工具的真实问题来源，覆盖比较基因组学、转录组学、多组学、作物进化与适应性机制。
+              </p>
+            </div>
+            <div class="publications">
+              <article class="publication reveal">
+                <div class="publication-index">01</div>
+                <div>
+                  <h3 class="publication-title">PhyloTracer: A Versatile Toolkit for Comparative Genomics and Phylogenomics Analysis.</h3>
+                  <p class="publication-description">面向比较基因组学和系统发育基因组学的工具包，支持基因树定根、基因重复事件起源与丢失、直系同源物检索、系统发育噪声消除、基因树拓扑摘要、物种杂交检测与可视化。</p>
+                </div>
+                <div class="tags"><span class="tag">在投</span><span class="tag">第一作者</span><span class="tag">软件论文</span></div>
+              </article>
+              <article class="publication reveal">
+                <div class="publication-index">02</div>
+                <div>
+                  <h3 class="publication-title">The origin and evolution of cultivated rice and genomic signatures of heterosis for yield traits in super-hybrid rice</h3>
+                  <p class="publication-description">探讨水稻的起源、进化以及杂交优势相关的基因组特征，为超级杂交稻产量性状研究提供基因组学证据。</p>
+                </div>
+                <div class="tags"><span class="tag">BMC Biology</span><span class="tag">第二合作作者</span></div>
+              </article>
+              <article class="publication reveal">
+                <div class="publication-index">03</div>
+                <div>
+                  <h3 class="publication-title">Transcriptome-based variations effectively untangling the intraspecific relationships and selection signals in Xinyang Maojian tea population</h3>
+                  <p class="publication-description">基于转录组变异揭示信阳毛尖茶群体内在物种关系与选择信号，为茶树育种和种质研究提供参考。</p>
+                </div>
+                <div class="tags"><span class="tag">Plant Bioinformatics</span><span class="tag">第六合作者</span></div>
+              </article>
+              <article class="publication reveal">
+                <div class="publication-index">04</div>
+                <div>
+                  <h3 class="publication-title">Comparative Transcriptomic and Proteomic Analysis of Hypoxia Response in Wild and Cultivated Tomato Roots</h3>
+                  <p class="publication-description">比较分析野生与栽培番茄根部对低氧响应的转录组与蛋白质组，揭示其适应性机制。</p>
+                </div>
+                <div class="tags"><span class="tag">BMC Genomics</span><span class="tag">第八合作作者</span></div>
+              </article>
+              <article class="publication reveal">
+                <div class="publication-index">05</div>
+                <div>
+                  <h3 class="publication-title">Multiomics Analysis Reveals the Origin and Evolution of Tea Plant Flavor</h3>
+                  <p class="publication-description">通过多组学分析揭示茶树风味的起源与演化，为风味性状改良提供理论基础。</p>
+                </div>
+                <div class="tags"><span class="tag">Nature Communications</span><span class="tag">第三合作作者</span></div>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section id="research">
+          <div class="container">
+            <div class="reveal">
+              <h2>研究问题决定软件形态。</h2>
+              <p class="section-copy">
+                生物学上下文不是装饰，而是系统定义的一部分，从同源基因推断到流程工程都会影响工具设计。
+              </p>
+            </div>
+            <div class="timeline">
+              <div class="timeline-item reveal"><div class="timeline-card"><p class="meta">研究轴 01</p><h3>直系同源与旁系同源推断</h3><p>跨物种和进化事件中的基因关系，是可解释进化分析的核心问题。</p></div></div>
+              <div class="timeline-item reveal"><div class="timeline-card"><p class="meta">研究轴 02</p><h3>基因树复杂性</h3><p>我关注如何让复杂树结构更容易浏览、检验，并转化为有生物学意义的判断。</p></div></div>
+              <div class="timeline-item reveal"><div class="timeline-card"><p class="meta">研究轴 03</p><h3>多倍化与进化</h3><p>多倍化历史会带来层叠的分析挑战，需要严谨模型和更好的软件支持。</p></div></div>
+              <div class="timeline-item reveal"><div class="timeline-card"><p class="meta">研究轴 04</p><h3>流程工程</h3><p>可靠研究依赖可复现计算、透明流程，以及尊重科学上下文的软件界面。</p></div></div>
+            </div>
+          </div>
+        </section>
+
+        <section id="stack">
+          <div class="container">
+            <div class="reveal">
+              <h2>技术栈不是百分比，而是关系网络。</h2>
+              <p class="section-copy">
+                我把工具看成互相连接的层：界面、自动化、科研计算、项目记忆和 AI 协作共同组成工作系统。
+              </p>
+            </div>
+            <div class="stack-grid">
+              <article class="card reveal"><p class="meta">界面</p><p>React, TypeScript, Tailwind, Vite, Framer Motion</p></article>
+              <article class="card reveal"><p class="meta">自动化</p><p>MCP, Codex, Claude Code, Cursor, GitHub Actions, Playwright</p></article>
+              <article class="card reveal"><p class="meta">科研计算</p><p>Python, FastAPI, Nextflow, Docker, 生物信息学流程</p></article>
+            </div>
+          </div>
+        </section>
+
+        <section id="workflow">
+          <div class="container">
+            <div class="reveal">
+              <h2>AI 应该嵌入科研循环。</h2>
+              <p class="section-copy">
+                每个阶段都会为下一个阶段创造上下文，目标是形成同时提升代码质量和科学有效性的反馈回路。
+              </p>
+            </div>
+            <div class="workflow">
+              <div class="step reveal"><small>步骤 01</small><h3>想法</h3><p>明确研究问题或软件问题的边界。</p></div>
+              <div class="step reveal"><small>步骤 02</small><h3>AI 规划</h3><p>用 AI 辅助拆解范围、结构和实现路径。</p></div>
+              <div class="step reveal"><small>步骤 03</small><h3>编码</h3><p>用可维护的架构实现系统。</p></div>
+              <div class="step reveal"><small>步骤 04</small><h3>测试</h3><p>验证行为、边界情况和流程可靠性。</p></div>
+              <div class="step reveal"><small>步骤 05</small><h3>生物学验证</h3><p>确认输出仍然具有生物学意义。</p></div>
+              <div class="step reveal"><small>步骤 06</small><h3>部署</h3><p>把工作封装成可靠可用的工具。</p></div>
+              <div class="step reveal"><small>步骤 07</small><h3>文档</h3><p>记录环境、决策和使用方式。</p></div>
+              <div class="step reveal"><small>步骤 08</small><h3>知识库</h3><p>沉淀跨项目可复用的经验。</p></div>
+              <div class="step reveal"><small>步骤 09</small><h3>Memory MCP</h3><p>把上下文转化为下一轮迭代可调用的长期记忆。</p></div>
+            </div>
+          </div>
+        </section>
+
+        <section id="notes">
+          <div class="container">
+            <div class="reveal">
+              <h2>用于记录研究日志、软件思考和 AI 实验。</h2>
+              <p class="section-copy">这个区域为未来博客、研究日志和学习笔记预留，不需要重构首页结构。</p>
+            </div>
+            <div class="note-grid">
+              <article class="note reveal"><span class="tag">AI 工作流</span><h3>如何设计尊重科学严谨性的 AI 工作流</h3><p>记录 AI 加速科研工作的边界，以及为什么生物学验证仍然需要研究者参与。</p></article>
+              <article class="note reveal"><span class="tag">软件</span><h3>为什么科研软件需要更好的产品思维</h3><p>思考那些技术上正确、但难以信任、操作和扩展的科研工具。</p></article>
+              <article class="note reveal"><span class="tag">生物学</span><h3>为复杂生物系统构建界面</h3><p>关于如何让基因树、进化关系和流程输出更容易被解释的记录。</p></article>
+            </div>
+          </div>
+        </section>
+
+        <section id="contact">
+          <div class="container">
+            <div class="reveal">
+              <h2>如果你也关注 AI 原生科研软件，欢迎交流。</h2>
+              <p class="section-copy">
+                我对工具构建、科研软件、AI 工作流和计算生物学协作都保持开放。
+              </p>
+            </div>
+            <div class="contact-grid">
+              <a class="contact-card reveal" href="https://github.com/" target="_blank" rel="noreferrer"><span class="meta">外部链接</span><h3>GitHub</h3></a>
+              <a class="contact-card reveal" href="mailto:hello@yourdomain.com"><span class="meta">邮箱</span><h3>hello@yourdomain.com</h3></a>
+              <a class="contact-card reveal" href="https://www.linkedin.com/" target="_blank" rel="noreferrer"><span class="meta">占位</span><h3>LinkedIn</h3></a>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer>
+        <div class="container footer-inner">
+          <span>© 2026 保留所有权利。</span>
+          <span>静态预览版。React 源码保留在项目根目录。</span>
+        </div>
+      </footer>
+    </div>
+
+    <script>
+      const revealObserver = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) entry.target.classList.add("visible");
+          });
+        },
+        { threshold: 0.12 },
+      );
+
+      document.querySelectorAll(".reveal").forEach((element) => revealObserver.observe(element));
+
+      const navLinks = [...document.querySelectorAll(".nav a[href^='#']")];
+      const sections = navLinks
+        .map((link) => document.querySelector(link.getAttribute("href")))
+        .filter(Boolean);
+
+      const sectionObserver = new IntersectionObserver(
+        (entries) => {
+          const active = entries
+            .filter((entry) => entry.isIntersecting)
+            .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+          if (!active) return;
+
+          navLinks.forEach((link) => {
+            link.classList.toggle("active", link.getAttribute("href") === `#${active.target.id}`);
+          });
+        },
+        { rootMargin: "-28% 0px -48% 0px", threshold: [0.2, 0.4, 0.6] },
+      );
+
+      sections.forEach((section) => sectionObserver.observe(section));
+    </script>
+  </body>
+</html>

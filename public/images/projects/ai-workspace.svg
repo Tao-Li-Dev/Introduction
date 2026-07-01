@@ -1,0 +1,47 @@
+<svg width="1200" height="760" viewBox="0 0 1200 760" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="760" rx="42" fill="#081018"/>
+  <rect x="1" y="1" width="1198" height="758" rx="41" stroke="white" stroke-opacity="0.12"/>
+  <circle cx="600" cy="130" r="360" fill="#5EA2FF" fill-opacity="0.08"/>
+  <text x="92" y="116" fill="#E5F0FF" font-family="Inter, Arial, sans-serif" font-size="34" font-weight="700">AI Workspace</text>
+  <text x="92" y="153" fill="#8EA4BD" font-family="Inter, Arial, sans-serif" font-size="17">planning, coding, memory and research logs in one loop</text>
+  <rect x="82" y="202" width="1036" height="468" rx="30" fill="#0D1722" stroke="white" stroke-opacity="0.1"/>
+  <rect x="112" y="232" width="236" height="408" rx="24" fill="#0A121B" stroke="white" stroke-opacity="0.08"/>
+  <rect x="382" y="232" width="384" height="408" rx="24" fill="#0A121B" stroke="white" stroke-opacity="0.08"/>
+  <rect x="800" y="232" width="288" height="408" rx="24" fill="#0A121B" stroke="white" stroke-opacity="0.08"/>
+  <text x="142" y="278" fill="#9CC7FF" font-family="IBM Plex Mono, monospace" font-size="14">PLAN</text>
+  <text x="412" y="278" fill="#9CC7FF" font-family="IBM Plex Mono, monospace" font-size="14">CODE SESSION</text>
+  <text x="830" y="278" fill="#9CC7FF" font-family="IBM Plex Mono, monospace" font-size="14">MEMORY GRAPH</text>
+  <g fill="#10263A">
+    <rect x="142" y="314" width="166" height="42" rx="14"/>
+    <rect x="142" y="376" width="138" height="42" rx="14"/>
+    <rect x="142" y="438" width="178" height="42" rx="14"/>
+    <rect x="142" y="500" width="148" height="42" rx="14"/>
+  </g>
+  <g fill="#B7C7D8" font-family="IBM Plex Mono, monospace" font-size="13">
+    <text x="162" y="340">define scope</text>
+    <text x="162" y="402">split tasks</text>
+    <text x="162" y="464">validate biology</text>
+    <text x="162" y="526">ship docs</text>
+  </g>
+  <g font-family="IBM Plex Mono, monospace" font-size="14">
+    <text x="416" y="330" fill="#6EE7F9">function</text>
+    <text x="488" y="330" fill="#E5F0FF">buildPipeline(context) {</text>
+    <text x="444" y="370" fill="#8EA4BD">const evidence = parseTrees(input)</text>
+    <text x="444" y="410" fill="#8EA4BD">const tests = validateOrthologs(evidence)</text>
+    <text x="444" y="450" fill="#8EA4BD">return deploy({ evidence, tests })</text>
+    <text x="416" y="490" fill="#E5F0FF">}</text>
+  </g>
+  <rect x="414" y="536" width="296" height="54" rx="17" fill="#10263A"/>
+  <text x="440" y="569" fill="#9CC7FF" font-family="IBM Plex Mono, monospace" font-size="14">Codex + Claude Code + MCP</text>
+  <g stroke="#395B84" stroke-width="3">
+    <path d="M930 374L870 320M930 374L1012 320M930 374L865 472M930 374L1018 484M865 472L1018 484"/>
+  </g>
+  <g fill="#0B1220" stroke-width="3">
+    <circle cx="930" cy="374" r="34" stroke="#5EA2FF"/>
+    <circle cx="870" cy="320" r="24" stroke="#6EE7F9"/>
+    <circle cx="1012" cy="320" r="24" stroke="#9CC7FF"/>
+    <circle cx="865" cy="472" r="24" stroke="#64748B"/>
+    <circle cx="1018" cy="484" r="24" stroke="#6EE7F9"/>
+  </g>
+  <text x="888" y="565" fill="#8EA4BD" font-family="IBM Plex Mono, monospace" font-size="13">project context persists</text>
+</svg>

@@ -1,0 +1,12 @@
+:root {
+  --color-bg-primary: #0a0d12;
+  --color-bg-elevated: #10151d;
+  --color-bg-glass: rgba(255, 255, 255, 0.06);
+  --color-border-subtle: rgba(255, 255, 255, 0.1);
+  --color-text-primary: #f5f7fa;
+  --color-text-secondary: #a6b0bf;
+  --color-text-muted: #7d8795;
+  --color-accent-blue: #5ea2ff;
+  --color-accent-blue-soft: rgba(94, 162, 255, 0.18);
+  --color-accent-line: rgba(94, 162, 255, 0.35);
+}

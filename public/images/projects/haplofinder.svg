@@ -1,0 +1,52 @@
+<svg width="1200" height="760" viewBox="0 0 1200 760" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="760" rx="42" fill="#081018"/>
+  <rect x="1" y="1" width="1198" height="758" rx="41" stroke="white" stroke-opacity="0.12"/>
+  <path d="M0 610C212 520 336 704 546 600C760 493 827 236 1200 290V760H0V610Z" fill="#5EA2FF" fill-opacity="0.07"/>
+  <text x="92" y="116" fill="#E5F0FF" font-family="Inter, Arial, sans-serif" font-size="34" font-weight="700">HaploFinder</text>
+  <text x="92" y="153" fill="#8EA4BD" font-family="Inter, Arial, sans-serif" font-size="17">haplotype discovery and biological interpretation</text>
+  <rect x="82" y="202" width="520" height="468" rx="30" fill="#0D1722" stroke="white" stroke-opacity="0.1"/>
+  <text x="116" y="254" fill="#9CC7FF" font-family="IBM Plex Mono, monospace" font-size="14">HAPLOTYPE NETWORK</text>
+  <g stroke="#395B84" stroke-width="3">
+    <path d="M310 418L206 334M310 418L448 320M310 418L476 520M310 418L216 552M206 334L172 452M448 320L502 410M476 520L392 608M216 552L392 608M502 410L476 520"/>
+  </g>
+  <g>
+    <circle cx="310" cy="418" r="60" fill="#10263A" stroke="#5EA2FF" stroke-width="4"/>
+    <circle cx="206" cy="334" r="38" fill="#10202E" stroke="#6EE7F9" stroke-width="3"/>
+    <circle cx="448" cy="320" r="44" fill="#10202E" stroke="#9CC7FF" stroke-width="3"/>
+    <circle cx="476" cy="520" r="48" fill="#10202E" stroke="#5EA2FF" stroke-width="3"/>
+    <circle cx="216" cy="552" r="34" fill="#10202E" stroke="#6EE7F9" stroke-width="3"/>
+    <circle cx="172" cy="452" r="24" fill="#0B1220" stroke="#64748B" stroke-width="3"/>
+    <circle cx="502" cy="410" r="28" fill="#0B1220" stroke="#64748B" stroke-width="3"/>
+    <circle cx="392" cy="608" r="25" fill="#0B1220" stroke="#64748B" stroke-width="3"/>
+  </g>
+  <text x="284" y="425" fill="#E5F0FF" font-family="IBM Plex Mono, monospace" font-size="18">H01</text>
+  <text x="190" y="340" fill="#DCEBFF" font-family="IBM Plex Mono, monospace" font-size="13">H02</text>
+  <text x="432" y="326" fill="#DCEBFF" font-family="IBM Plex Mono, monospace" font-size="13">H03</text>
+  <text x="460" y="526" fill="#DCEBFF" font-family="IBM Plex Mono, monospace" font-size="13">H04</text>
+  <rect x="640" y="202" width="478" height="468" rx="30" fill="#0D1722" stroke="white" stroke-opacity="0.1"/>
+  <text x="676" y="254" fill="#E5F0FF" font-family="Inter, Arial, sans-serif" font-size="24" font-weight="700">Signal Matrix</text>
+  <g transform="translate(676 294)">
+    <rect width="372" height="224" rx="22" fill="#0A121B" stroke="white" stroke-opacity="0.08"/>
+    <g fill="#12263B">
+      <rect x="28" y="30" width="52" height="38" rx="10"/>
+      <rect x="92" y="30" width="52" height="38" rx="10"/>
+      <rect x="156" y="30" width="52" height="38" rx="10"/>
+      <rect x="220" y="30" width="52" height="38" rx="10"/>
+      <rect x="284" y="30" width="52" height="38" rx="10"/>
+      <rect x="28" y="84" width="52" height="38" rx="10"/>
+      <rect x="92" y="84" width="52" height="38" rx="10" fill="#174160"/>
+      <rect x="156" y="84" width="52" height="38" rx="10"/>
+      <rect x="220" y="84" width="52" height="38" rx="10" fill="#103243"/>
+      <rect x="284" y="84" width="52" height="38" rx="10"/>
+      <rect x="28" y="138" width="52" height="38" rx="10" fill="#103243"/>
+      <rect x="92" y="138" width="52" height="38" rx="10"/>
+      <rect x="156" y="138" width="52" height="38" rx="10" fill="#174160"/>
+      <rect x="220" y="138" width="52" height="38" rx="10"/>
+      <rect x="284" y="138" width="52" height="38" rx="10" fill="#0F2F3B"/>
+    </g>
+  </g>
+  <rect x="676" y="552" width="156" height="42" rx="14" fill="#12263B"/>
+  <text x="697" y="578" fill="#9CC7FF" font-family="IBM Plex Mono, monospace" font-size="13">selection peak</text>
+  <rect x="850" y="552" width="166" height="42" rx="14" fill="#0F2F3B"/>
+  <text x="871" y="578" fill="#6EE7F9" font-family="IBM Plex Mono, monospace" font-size="13">interpretable</text>
+</svg>
