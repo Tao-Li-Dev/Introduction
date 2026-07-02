@@ -15,8 +15,8 @@ export function ContactSection() {
       <Container>
         <SectionHeader
           eyebrow="联系"
-          title="如果你也关注 AI 原生科研软件，欢迎交流。"
-          description="我对工具构建、科研软件、AI 工作流和计算生物学协作都保持开放。"
+          title="欢迎围绕科研软件与进化基因组学交流。"
+          description="我关注进化基因组学工具、可复现流程，以及软件质量会直接影响生物学解释的合作。"
         />
         <GlassPanel className="mt-12 p-6 md:p-8">
           <div className="grid gap-4 md:grid-cols-2">

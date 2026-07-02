@@ -1,54 +1,43 @@
 import { GlassPanel } from "@/components/ui/GlassPanel";
 
-const pipelineSteps = [
-  { label: "基因树", color: "from-accent-blue/20 to-transparent" },
-  { label: "定根", color: "from-accent-line/20 to-transparent" },
-  { label: "OrthoFilter", color: "from-accent-blue/20 to-transparent" },
-  { label: "GD/Loss", color: "from-accent-line/20 to-transparent" },
-  { label: "Hybrid", color: "from-accent-blue/20 to-transparent" },
-  { label: "物种树", color: "from-accent-line/20 to-transparent" },
+const profileTags = [
+  "系统发育基因组学",
+  "直系同源推断",
+  "可复现计算",
 ];
 
 export function HeroSystemPanel() {
   return (
-    <GlassPanel className="relative overflow-hidden p-6">
+    <GlassPanel className="relative overflow-hidden rounded-[28px] p-5 md:p-6">
+      <div className="absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent" />
       <div className="relative">
-        <div className="mb-6 flex items-center justify-between">
+        <p className="font-mono text-xs uppercase tracking-[0.22em] text-accent-blue">
+          Graduate Student
+        </p>
+        <div className="mt-4 flex items-end justify-between gap-5">
           <div>
-            <p className="font-mono text-xs uppercase tracking-[0.22em] text-accent-blue">
-              PhyloTracer Pipeline
-            </p>
-            <p className="mt-2 text-sm text-text-secondary">
-              从基因树到物种树的完整分析流程。
+            <h2 className="text-2xl font-semibold leading-tight text-text-primary">
+              李涛
+            </h2>
+            <p className="mt-2 max-w-[18rem] text-sm leading-6 text-text-secondary">
+              作物学专业，研究方向为生物信息软件开发。
             </p>
           </div>
-          <span className="rounded-full border border-accent-line px-3 py-1 text-xs text-accent-blue">
-            17 Modules
-          </span>
+          <div className="hidden h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.06] font-mono text-sm text-accent-blue sm:flex">
+            LT
+          </div>
         </div>
-        <div className="flex items-center gap-2 overflow-x-auto">
-          {pipelineSteps.map((step, i) => (
-            <div key={step.label} className="flex items-center shrink-0">
-              <div
-                className={`rounded-xl border border-white/10 bg-gradient-to-br ${step.color} px-4 py-3 text-sm text-text-primary transition-transform duration-300 hover:-translate-y-1`}
-              >
-                {step.label}
-              </div>
-              {i < pipelineSteps.length - 1 && (
-                <ArrowIcon />
-              )}
-            </div>
+        <div className="mt-5 flex flex-wrap gap-2">
+          {profileTags.map((tag) => (
+            <span
+              key={tag}
+              className="rounded-full border border-white/10 bg-white/[0.05] px-3 py-1.5 text-xs text-text-secondary"
+            >
+              {tag}
+            </span>
           ))}
         </div>
       </div>
     </GlassPanel>
-  );
-}
-
-function ArrowIcon() {
-  return (
-    <svg width="20" height="12" viewBox="0 0 20 12" fill="none" className="text-text-muted shrink-0">
-      <path d="M4 6H16M16 6L11 2M16 6L11 10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-    </svg>
   );
 }

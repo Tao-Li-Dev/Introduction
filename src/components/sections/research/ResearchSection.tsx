@@ -8,9 +8,9 @@ export function ResearchSection() {
     <section id="research" className="py-24 md:py-32">
       <Container>
         <SectionHeader
-          eyebrow="研究方向"
-          title="研究问题决定软件形态。"
-          description="我的研究兴趣会直接影响工具设计。生物学上下文不是装饰，而是系统定义的一部分。"
+          eyebrow="研究问题"
+          title="软件形态从生物学问题开始。"
+          description="我关注那些由基因树、直系同源推断和可复现性共同决定的软件设计问题。"
         />
         <ResearchTimeline topics={researchTopics} />
       </Container>

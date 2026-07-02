@@ -1,9 +1,11 @@
 export const sectionIds = [
   "hero",
-  "about",
-  "projects",
-  "publications",
+  "profile",
+  "phylotracer",
   "research",
+  "publications",
+  "methods",
+  "roadmap",
   "contact",
 ] as const;
 

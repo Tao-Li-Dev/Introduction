@@ -19,7 +19,7 @@ export function ResearchTimeline({ topics }: ResearchTimelineProps) {
               <p className="font-mono text-xs uppercase tracking-[0.22em] text-accent-blue">
                 {topic.year}
               </p>
-              <h3 className="mt-3 text-2xl font-semibold">{topic.title}</h3>
+              <h3 className="mt-3 text-xl font-semibold leading-snug md:text-2xl">{topic.title}</h3>
               <p className="mt-4 text-base leading-8 text-text-secondary">
                 {topic.description}
               </p>

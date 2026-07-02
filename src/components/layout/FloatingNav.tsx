@@ -15,7 +15,7 @@ export function FloatingNav({ activeSection }: FloatingNavProps) {
           href="#hero"
           className="rounded-full px-3 py-2 text-sm font-semibold tracking-tight text-text-primary"
         >
-          AI / 生物
+          Li Tao
         </a>
         <div className="hidden items-center gap-1 sm:flex">
           {navItems.map((item) => {

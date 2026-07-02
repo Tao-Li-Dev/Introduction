@@ -22,6 +22,8 @@ export type Publication = {
   doi?: string;
   status?: string;
   description: string;
+  contribution?: string;
+  contributionItems?: string[];
 };
 
 export type ResearchTopic = {
@@ -39,6 +41,46 @@ export type StackCluster = {
 export type WorkflowStep = {
   title: string;
   detail: string;
+};
+
+export type PhyloTracerFeature = {
+  title: string;
+  description: string;
+};
+
+export type PhyloTracerIO = {
+  label: string;
+  items: string[];
+};
+
+export type MethodCluster = {
+  name: string;
+  description: string;
+  tools: {
+    name: string;
+    use: string;
+  }[];
+};
+
+export type RoadmapItem = {
+  title: string;
+  status: string;
+  description: string;
+};
+
+export type EducationItem = {
+  school: string;
+  degree: string;
+  college: string;
+  major: string;
+  period: string;
+  highlights: string[];
+};
+
+export type ExperienceItem = {
+  title: string;
+  meta: string;
+  bullets: string[];
 };
 
 export type Note = {
