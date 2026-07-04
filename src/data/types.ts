@@ -3,16 +3,10 @@ export type NavItem = {
   label: string;
 };
 
-export type Project = {
-  slug: string;
-  title: string;
-  summary: string;
-  problem: string;
-  status: string;
-  stack: string[];
+export type HeroProofItem = {
+  value: string;
+  label: string;
   detail: string;
-  github: string;
-  image: string;
 };
 
 export type Publication = {
@@ -22,6 +16,10 @@ export type Publication = {
   doi?: string;
   status?: string;
   description: string;
+  problem: string;
+  task: string;
+  methods: string[];
+  result: string;
   contribution?: string;
   contributionItems?: string[];
 };
@@ -30,17 +28,6 @@ export type ResearchTopic = {
   title: string;
   description: string;
   year: string;
-};
-
-export type StackCluster = {
-  name: string;
-  description: string;
-  tools: string[];
-};
-
-export type WorkflowStep = {
-  title: string;
-  detail: string;
 };
 
 export type PhyloTracerFeature = {
@@ -83,9 +70,3 @@ export type ExperienceItem = {
   bullets: string[];
 };
 
-export type Note = {
-  title: string;
-  category: string;
-  summary: string;
-  date: string;
-};

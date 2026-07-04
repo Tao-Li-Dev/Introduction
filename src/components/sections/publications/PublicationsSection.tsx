@@ -13,56 +13,71 @@ export function PublicationsSection() {
       <Container>
         <SectionHeader
           eyebrow="论文贡献"
-          title="论文不是列表，而是问题来源。"
-          description="每个研究项目都在提醒我：可靠的计算生物学软件必须保留分析来源、解释过程和复现路径。"
+          title="每篇论文都对应一次具体的分析任务。"
+          description="这里不只列题名，而是说明我在项目中承担了什么数据、方法和结果贡献。"
         />
-        <div className="mt-12 grid gap-5">
+        <div className="mt-12 grid gap-6">
           {publications.map((publication, index) => (
             <motion.article key={publication.title} {...reveal}>
-              <GlassPanel className="grid gap-6 p-6 md:grid-cols-[0.1fr_1fr_0.28fr] md:p-7">
-                <div className="font-mono text-sm text-accent-blue">
-                  {String(index + 1).padStart(2, "0")}
-                </div>
-                <div>
-                  <h3 className="text-xl font-semibold leading-snug md:text-2xl">
-                    {publication.title}
-                  </h3>
-                  <p className="mt-4 text-base leading-8 text-text-secondary">
-                    {publication.description}
-                  </p>
-                  {publication.contribution ? (
-                    <div className="mt-5">
-                      <div className="rounded-2xl border border-white/10 bg-white/[0.04] p-4">
-                        <p className="text-sm font-medium text-text-primary">我的贡献</p>
-                        <p className="mt-2 text-sm leading-6 text-text-secondary">
-                          {publication.contribution}
-                        </p>
-                        {publication.contributionItems?.length ? (
-                          <ul className="mt-3 space-y-2 text-sm leading-6 text-text-secondary">
-                            {publication.contributionItems.map((item) => (
-                              <li key={item}>{item}</li>
-                            ))}
-                          </ul>
-                        ) : null}
-                      </div>
+              <GlassPanel className="overflow-hidden p-0">
+                <div className="grid gap-0 lg:grid-cols-[0.22fr_0.78fr]">
+                  <aside className="border-b border-white/10 bg-white/[0.035] p-6 lg:border-b-0 lg:border-r lg:p-7">
+                    <p className="font-mono text-sm text-accent-blue">
+                      {String(index + 1).padStart(2, "0")}
+                    </p>
+                    <div className="mt-5 flex flex-wrap gap-2 lg:block lg:space-y-2">
+                      <Tag>{publication.venue}</Tag>
+                      <Tag>{publication.role}</Tag>
+                      {publication.status ? <Tag>{publication.status}</Tag> : null}
                     </div>
-                  ) : null}
-                </div>
-                <div className="flex flex-wrap content-start gap-2 md:justify-end">
-                  <Tag>{publication.venue}</Tag>
-                  <Tag>{publication.role}</Tag>
-                  {publication.status ? <Tag>{publication.status}</Tag> : null}
-                  {publication.doi && (
-                    <a
-                      href={publication.doi}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex items-center gap-1 rounded-full border border-accent-line/50 bg-accent-blue/10 px-3 py-1 text-xs font-medium text-accent-blue transition-colors hover:bg-accent-blue/20"
-                    >
-                      <ExternalLink className="h-3 w-3" />
-                      View
-                    </a>
-                  )}
+                    {publication.doi ? (
+                      <a
+                        href={publication.doi}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="mt-5 inline-flex items-center gap-1.5 rounded-full border border-accent-line/50 bg-accent-blue/10 px-3 py-1.5 text-xs font-medium text-accent-blue transition-colors hover:bg-accent-blue/20"
+                      >
+                        <ExternalLink className="h-3.5 w-3.5" />
+                        原文链接
+                      </a>
+                    ) : null}
+                  </aside>
+
+                  <div className="p-6 md:p-8">
+                    <h3 className="max-w-4xl text-xl font-semibold leading-snug text-text-primary md:text-2xl">
+                      {publication.title}
+                    </h3>
+                    <p className="mt-4 max-w-4xl text-base leading-8 text-text-secondary">
+                      {publication.description}
+                    </p>
+
+                    <div className="mt-7 grid gap-4 md:grid-cols-2">
+                      <ContributionBlock label="文章问题" body={publication.problem} />
+                      <ContributionBlock label="我的任务" body={publication.task} />
+                      <div className="rounded-[1.25rem] border border-white/10 bg-white/[0.04] p-4">
+                        <p className="text-sm font-medium text-text-primary">方法工具</p>
+                        <div className="mt-3 flex flex-wrap gap-2">
+                          {publication.methods.map((method) => (
+                            <Tag key={method}>{method}</Tag>
+                          ))}
+                        </div>
+                      </div>
+                      <ContributionBlock label="贡献结果" body={publication.result} />
+                    </div>
+
+                    {publication.contributionItems?.length ? (
+                      <div className="mt-5 rounded-[1.25rem] border border-accent-line/35 bg-accent-blue/10 p-4">
+                        <p className="text-sm font-medium text-text-primary">具体贡献</p>
+                        <ul className="mt-3 grid gap-2 text-sm leading-6 text-text-secondary md:grid-cols-2">
+                          {publication.contributionItems.map((item) => (
+                            <li key={item} className="pl-3 before:-ml-3 before:mr-2 before:text-accent-blue before:content-['•']">
+                              {item}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ) : null}
+                  </div>
                 </div>
               </GlassPanel>
             </motion.article>
@@ -70,5 +85,14 @@ export function PublicationsSection() {
         </div>
       </Container>
     </section>
+  );
+}
+
+function ContributionBlock({ label, body }: { label: string; body: string }) {
+  return (
+    <div className="rounded-[1.25rem] border border-white/10 bg-white/[0.04] p-4">
+      <p className="text-sm font-medium text-text-primary">{label}</p>
+      <p className="mt-2 text-sm leading-6 text-text-secondary">{body}</p>
+    </div>
   );
 }

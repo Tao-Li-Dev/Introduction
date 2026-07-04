@@ -11,8 +11,8 @@ export function HeroSystemPanel() {
     <GlassPanel className="relative overflow-hidden rounded-[28px] p-5 md:p-6">
       <div className="absolute inset-x-6 top-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent" />
       <div className="relative">
-        <p className="font-mono text-xs uppercase tracking-[0.22em] text-accent-blue">
-          Graduate Student
+        <p className="font-mono text-xs tracking-[0.18em] text-accent-blue">
+          作物学硕士研究生
         </p>
         <div className="mt-4 flex items-end justify-between gap-5">
           <div>

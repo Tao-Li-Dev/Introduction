@@ -1,10 +1,10 @@
-import type { NavItem } from "@/data/types";
+import type { HeroProofItem, NavItem } from "@/data/types";
 
 export const navItems: NavItem[] = [
   { id: "profile", label: "履历" },
   { id: "phylotracer", label: "PhyloTracer" },
   { id: "research", label: "问题" },
-  { id: "publications", label: "论文" },
+  { id: "publications", label: "论文贡献" },
   { id: "methods", label: "方法" },
   { id: "roadmap", label: "路线" },
   { id: "contact", label: "联系" },
@@ -19,24 +19,29 @@ export const hero = {
   secondaryAction: { label: "GitHub", href: "https://github.com/YiyongZhao/PhyloTracer" },
 };
 
-export const about = {
-  intro:
-    "我关注进化基因组学、科研软件与可复现计算之间的交叉地带。",
-  blocks: [
-    {
-      title: "我如何思考",
-      body: "我喜欢把复杂、零散、依赖人工经验的科研流程，整理成清晰、可验证、可迭代的软件系统。",
-    },
-    {
-      title: "我在构建什么",
-      body: "我的重点是计算生物学流程、命令行工具、可复现分析，以及能让生物学证据更容易被检查的软件界面。",
-    },
-    {
-      title: "长期方向",
-      body: "我希望长期构建稳健、可复用、可验证的软件基础设施，让进化基因组学分析更可靠。",
-    },
-  ],
-};
+export const heroProofItems: HeroProofItem[] = [
+  {
+    value: "30,000+",
+    label: "基因树批量分析",
+    detail: "面向系统发育基因组学中的规模化树分析与结果整理。",
+  },
+  {
+    value: "16+",
+    label: "PhyloTracer 模块",
+    detail: "覆盖定根、复制/丢失、直系同源检索、拓扑摘要与可视化。",
+  },
+  {
+    value: "First Author",
+    label: "软件论文",
+    detail: "以 PhyloTracer 为核心，整理方法、实现、验证和文档。",
+  },
+  {
+    value: "Crop Science",
+    label: "作物学硕士",
+    detail: "研究方向聚焦生物信息软件开发和可复现分析流程。",
+  },
+];
+
 
 export const contact = {
   email: "l948777439@gmail.com",

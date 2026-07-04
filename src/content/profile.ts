@@ -19,7 +19,7 @@ export const educationItems: EducationItem[] = [
     major: "作物学",
     period: "2022.09-2026.06",
     highlights: [
-      "研究方向：作物遗传育种与生物信息学",
+      "研究方向：生物信息软件开发",
       "主修课程：数量遗传学、系统发育组学、统计遗传学、基因组学、转录组学",
     ],
   },

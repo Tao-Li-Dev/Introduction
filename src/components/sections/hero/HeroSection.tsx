@@ -60,7 +60,7 @@ export function HeroSection() {
               overlayContent={
                 <div className="flex h-full flex-col justify-between bg-[linear-gradient(180deg,rgba(10,13,18,0)_48%,rgba(10,13,18,0.68)_100%)] p-5">
                   <span className="w-fit rounded-full border border-white/15 bg-black/20 px-3 py-1 font-mono text-[0.68rem] uppercase tracking-[0.2em] text-white/80 backdrop-blur-md">
-                    科研软件工程
+                    生物信息软件开发
                   </span>
                   <div>
                     <p className="font-mono text-xs uppercase tracking-[0.22em] text-white/70">
