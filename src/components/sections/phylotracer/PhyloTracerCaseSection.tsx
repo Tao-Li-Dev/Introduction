@@ -21,6 +21,12 @@ const caseFacts = [
   { label: "工作方式", value: "CLI + 批处理 + 可视化" },
 ];
 
+const interfaceProofs = [
+  { label: "GF list", value: "GF_ID<TAB>gene_tree_path" },
+  { label: "Gene map", value: "gene_id<TAB>species_name" },
+  { label: "Output dir", value: "gd_detector/ 等模块目录" },
+];
+
 export function PhyloTracerCaseSection() {
   return (
     <section id="phylotracer" className="py-24 md:py-32">
@@ -133,11 +139,28 @@ export function PhyloTracerCaseSection() {
               <div className="flex h-11 w-11 items-center justify-center rounded-2xl border border-accent-line/40 bg-accent-blue/10 text-accent-blue">
                 <TerminalSquare className="h-5 w-5" />
               </div>
-              <h3 className="text-xl font-semibold">CLI 示例</h3>
+              <div>
+                <h3 className="text-xl font-semibold">文件接口与输出证据</h3>
+                <p className="mt-1 text-sm text-text-muted">以真实模块输入和结果文件说明软件怎么运行</p>
+              </div>
             </div>
-            <pre className="mt-6 overflow-x-auto rounded-[1.25rem] border border-white/10 bg-[#06090d] p-5 text-sm leading-7 text-text-primary">
-              <code>{phylotracerCase.cliExample}</code>
-            </pre>
+
+            <p className="mt-5 text-sm leading-7 text-text-secondary">
+              以 GD_Detector 为例，输入不是一个笼统的数据集，而是三类可检查文件：基因家族到树文件的索引表、基因到物种的映射表、Newick 物种树。运行后会写出 GD 事件表、GD 类型表和编号物种树，供可视化与下游模块继续使用。
+            </p>
+
+            <div className="mt-5 grid gap-3">
+              {interfaceProofs.map((item) => (
+                <div
+                  key={item.label}
+                  className="flex items-center justify-between gap-4 rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3"
+                >
+                  <p className="font-mono text-[0.7rem] uppercase text-text-muted">{item.label}</p>
+                  <p className="text-right text-sm font-medium text-text-primary">{item.value}</p>
+                </div>
+              ))}
+            </div>
+
             <div className="mt-6 grid gap-5">
               {phylotracerIO.map((group) => (
                 <div key={group.label}>
@@ -177,41 +200,93 @@ export function PhyloTracerCaseSection() {
           </GlassPanel>
         </div>
 
-        <div className="mt-5 grid gap-5 lg:grid-cols-[0.95fr_1.05fr]">
-          <GlassPanel className="p-6 md:p-8">
-            <h3 className="text-xl font-semibold">我的贡献</h3>
-            <div className="mt-6 grid gap-3 sm:grid-cols-2">
-              {phylotracerContributions.map((item) => (
-                <div
-                  key={item}
-                  className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm leading-6 text-text-secondary"
-                >
-                  {item}
-                </div>
-              ))}
-            </div>
-          </GlassPanel>
+        <GlassPanel className="mt-5 p-6 md:p-8">
+          <h3 className="text-xl font-semibold">我的贡献</h3>
+          <div className="mt-6 grid gap-3 sm:grid-cols-2">
+            {phylotracerContributions.map((item) => (
+              <div
+                key={item}
+                className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm leading-6 text-text-secondary"
+              >
+                {item}
+              </div>
+            ))}
+          </div>
+        </GlassPanel>
 
-          <GlassPanel className="p-6 md:p-8">
-            <h3 className="text-xl font-semibold">证据槽</h3>
-            <p className="mt-3 max-w-3xl text-sm leading-7 text-text-secondary">
-              不伪造运行截图。后续拿到真实命令行、树可视化、输出目录、生成图和统计表后，直接替换这些位置。
-            </p>
-            <div className="mt-6 grid gap-3 sm:grid-cols-2">
-              {phylotracerEvidence.map((item) => (
-                <div
-                  key={item.title}
-                  className="rounded-[1.1rem] border border-dashed border-accent-line/35 bg-accent-blue/[0.06] p-4"
-                >
-                  <p className="font-medium text-text-primary">{item.title}</p>
+        <GlassPanel className="mt-5 p-6 md:p-8">
+          <div className="flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+            <div>
+              <h3 className="text-xl font-semibold">真实证据</h3>
+              <p className="mt-3 max-w-3xl text-sm leading-7 text-text-secondary">
+                这些材料来自 PhyloTracer 公开仓库、归档数据包、真实分析输出和论文图表素材，不使用伪造截图。
+              </p>
+            </div>
+            <a
+              href="https://doi.org/10.5281/zenodo.21207696"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex w-fit items-center gap-1.5 rounded-full border border-accent-line/50 bg-accent-blue/10 px-3 py-1.5 text-xs font-medium text-accent-blue transition-colors hover:bg-accent-blue/20"
+            >
+              Zenodo DOI
+              <ExternalLink className="h-3.5 w-3.5" />
+            </a>
+          </div>
+          <div className="mt-6 grid gap-4 sm:grid-cols-2">
+            {phylotracerEvidence.map((item) => (
+              <article
+                key={item.title}
+                className="overflow-hidden rounded-[1.25rem] border border-white/10 bg-white/[0.04]"
+              >
+                {item.image ? (
+                  <div className="flex aspect-[16/10] items-center justify-center border-b border-white/10 bg-[#06090d] p-3">
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      className="h-full w-full rounded-[0.85rem] object-contain"
+                      loading="lazy"
+                    />
+                  </div>
+                ) : null}
+                <div className="p-4">
+                  <div className="flex items-start justify-between gap-3">
+                    <p className="font-medium text-text-primary">{item.title}</p>
+                    {item.href ? (
+                      <a
+                        href={item.href}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="shrink-0 text-accent-blue transition-colors hover:text-text-primary"
+                        aria-label={item.linkLabel ?? item.title}
+                      >
+                        <ExternalLink className="h-4 w-4" />
+                      </a>
+                    ) : null}
+                  </div>
                   <p className="mt-2 text-sm leading-6 text-text-secondary">
                     {item.description}
                   </p>
+                  {item.metrics?.length ? (
+                    <div className="mt-4 grid gap-2 sm:grid-cols-3">
+                      {item.metrics.map((metric) => (
+                        <div
+                          key={item.title + metric.label}
+                          className="rounded-xl border border-white/10 bg-black/15 px-3 py-2"
+                        >
+                          <p className="font-mono text-[0.68rem] text-text-muted">{metric.label}</p>
+                          <p className="mt-1 text-sm font-semibold text-text-primary">{metric.value}</p>
+                        </div>
+                      ))}
+                    </div>
+                  ) : null}
+                  <p className="mt-4 border-t border-white/10 pt-3 font-mono text-[0.68rem] leading-5 text-text-muted">
+                    {item.source}
+                  </p>
                 </div>
-              ))}
-            </div>
-          </GlassPanel>
-        </div>
+              </article>
+            ))}
+          </div>
+        </GlassPanel>
       </Container>
     </section>
   );

@@ -26,9 +26,9 @@ export const heroProofItems: HeroProofItem[] = [
     detail: "面向系统发育基因组学中的规模化树分析与结果整理。",
   },
   {
-    value: "16+",
+    value: "17",
     label: "PhyloTracer 模块",
-    detail: "覆盖定根、复制/丢失、直系同源检索、拓扑摘要与可视化。",
+    detail: "覆盖定根、拓扑距离、复制/丢失、直系同源检索、杂交检测与可视化。",
   },
   {
     value: "First Author",

@@ -25,7 +25,7 @@ export function PublicationsSection() {
                     <p className="font-mono text-sm text-accent-blue">
                       {String(index + 1).padStart(2, "0")}
                     </p>
-                    <div className="mt-5 flex flex-wrap gap-2 lg:block lg:space-y-2">
+                    <div className="mt-5 flex flex-wrap gap-2 lg:flex-col lg:items-start">
                       <Tag>{publication.venue}</Tag>
                       <Tag>{publication.role}</Tag>
                       {publication.status ? <Tag>{publication.status}</Tag> : null}

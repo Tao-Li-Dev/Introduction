@@ -1,4 +1,4 @@
-import type { PhyloTracerFeature, PhyloTracerIO } from "@/data/types";
+import type { PhyloTracerEvidence, PhyloTracerFeature, PhyloTracerIO } from "@/data/types";
 
 export const phylotracerCase = {
   title: "PhyloTracer",
@@ -9,11 +9,6 @@ export const phylotracerCase = {
     "PhyloTracer 面向需要批量检查基因进化关系的研究者。它试图减少人工脚本拼接、手动检查和结果整理带来的不确定性，把树分析流程做成可复现、可追踪、可解释的软件工作流。",
   biologicalContribution:
     "它的生物学意义在于：直系同源关系、基因重复事件和拓扑模式会直接影响研究者如何解释基因组进化。更清晰的流程可以帮助区分稳定的进化信号与分析伪影。",
-  cliExample: `phylotracer analyze \\
-  --tree gene.tree \\
-  --species species.tree \\
-  --orthogroups orthogroups.tsv \\
-  --output results/`,
 };
 
 export const phylotracerPipeline = [
@@ -65,24 +60,24 @@ export const phylotracerFeatures: PhyloTracerFeature[] = [
   {
     title: "Pipeline integration",
     description:
-      "把模块组织成可嵌入更大分析流程的单元，方便后续接入自动化和 benchmark。",
+      "17 个模块共享 gene-to-species mapping、Newick trees 和 tab-delimited annotations 等输入约定，方便嵌入更大的系统发育基因组学流程。",
   },
 ];
 
 export const phylotracerIO: PhyloTracerIO[] = [
   {
-    label: "输入",
-    items: ["基因树", "物种树", "序列数据", "Orthogroups"],
+    label: "输入文件",
+    items: ["GF_ID2path.imap", "gene2sps.imap", "sptree.nwk", "gf_aln.txt"],
   },
   {
-    label: "输出",
+    label: "输出文件",
     items: [
-      "进化事件",
-      "同源关系",
-      "注释树",
-      "统计结果",
-      "图形",
-      "报告",
+      "gd_result_relaxed.txt",
+      "gd_type_relaxed.tsv",
+      "numed_sptree.nwk",
+      "gd_loss.csv",
+      "hyde_out.txt",
+      "dotplot PNG/PDF",
     ],
   },
 ];
@@ -97,35 +92,90 @@ export const phylotracerContributions = [
   "中间结果的生物学验证",
 ];
 
-export const phylotracerEvidence = [
+export const phylotracerEvidence: PhyloTracerEvidence[] = [
   {
-    title: "命令行运行",
+    title: "本体仓库与安装入口",
     description:
-      "当前用 CLI 示例展示输入、输出目录和可重复调用方式。后续可替换为真实运行截图。",
+      "PhyloTracer 本体仓库提供 PyPI 安装、ReadTheDocs 文档、MIT license、CITATION.cff、example_data 和 pytest/CI 测试矩阵。",
+    source: "README.md / pyproject.toml / CITATION.cff / .github/workflows/ci.yml",
+    href: "https://github.com/YiyongZhao/PhyloTracer",
+    linkLabel: "GitHub repository",
+    metrics: [
+      { label: "Modules", value: "17" },
+      { label: "Python", value: "3.8-3.12" },
+      { label: "License", value: "MIT" },
+    ],
   },
   {
-    title: "树可视化",
+    title: "版本与数据仓库",
     description:
-      "预留基因树或注释树可视化截图位置，用于展示结果如何被检查。",
+      "PhyloTracer manuscript data repository 已归档到 Zenodo，并记录了软件版本、Git commit、补充表格和主图文件。",
+    source: "Zenodo archived package / README.md",
+    href: "https://doi.org/10.5281/zenodo.21207696",
+    linkLabel: "Zenodo DOI",
+    metrics: [
+      { label: "Software", value: "v1.0.3" },
+      { label: "Commit", value: "925afa45" },
+      { label: "Tables", value: "S1-S13" },
+    ],
   },
   {
-    title: "输出文件夹",
+    title: "主流程与模块总览",
     description:
-      "预留 results/ 目录截图位置，用于展示统计表、图形和报告的真实组织方式。",
+      "主图展示 post-gene-tree processing 的整体软件逻辑，用于说明 PhyloTracer 如何把基因树处理、事件解释和输出检查串成流程。",
+    source: "manuscript figure render / Fig. 1",
+    image: "/images/phylotracer-evidence/phylotracer-overview.png",
+    metrics: [
+      { label: "Figure", value: "Fig. 1" },
+      { label: "Use", value: "workflow overview" },
+    ],
   },
   {
-    title: "生成图形",
+    title: "Phylo_Rooter 定根 benchmark",
     description:
-      "预留生成 figures 的截图位置，用于展示计算结果如何转化为论文或报告中的证据。",
+      "基于 MRCA/root-distance 的定根 benchmark，用于检查物种树约束定根是否能在大规模基因树中保持稳定。",
+    source: "Table_S2_Rooter_MRCA_distance.tsv / rooting benchmark figure",
+    image: "/images/phylotracer-evidence/rooting-benchmark.png",
+    metrics: [
+      { label: "OneKP exact match", value: "98.7%" },
+      { label: "Dataset", value: "1,178 spp." },
+      { label: "Table", value: "S2" },
+    ],
   },
   {
-    title: "统计表",
+    title: "Hybrid_Tracer 验证",
     description:
-      "预留统计结果截图位置，用于展示事件计数、同源关系或拓扑摘要等可审计输出。",
+      "Hybrid_Tracer 结果与常规 HyDe 比较，并在花生、油菜和小麦等阳性对照中检查杂交信号能否恢复。",
+    source: "Table_S7_HybridTracker_30sp_Comparison.tsv / Table_S8_ThreeSpecies_Hybrid_Validation.tsv / Fig. 6",
+    image: "/images/phylotracer-evidence/hybrid-tracker-validation.png",
+    metrics: [
+      { label: "Tested triples", value: "390" },
+      { label: "Arachis Z", value: "27.33" },
+      { label: "Brassica Z", value: "18.72" },
+    ],
   },
   {
-    title: "GitHub 源码",
+    title: "HaploFinder 小麦两阶段分析",
     description:
-      "仓库链接是当前代码、模块实现和后续真实输出截图的权威入口。",
+      "小麦六倍体场景中，HaploFinder 通过两阶段策略恢复 ATAU(D)+TTUR(AB)→TAEN(ABD) 相关信号。",
+    source: "Table_S9_Wheat_TwoStage_Analysis.tsv / Fig. 7",
+    image: "/images/phylotracer-evidence/haplofinder-wheat-analysis.png",
+    metrics: [
+      { label: "Stage2 GD events", value: "2,721" },
+      { label: "Z-score", value: "10.60" },
+      { label: "Gamma", value: "0.346" },
+    ],
+  },
+  {
+    title: "真实输出图与补充表格",
+    description:
+      "HaploFinder dotplot 和 Supplementary_Data.xlsx 共同展示输出如何从文件级结果进入论文图表和补充材料。",
+    source: "Archived figure outputs / Supplementary_Data.xlsx / package validation",
+    image: "/images/phylotracer-evidence/wheat-dotplot.png",
+    metrics: [
+      { label: "Upload package", value: "30 files" },
+      { label: "Workbook", value: "S1-S13" },
+      { label: "Checksums", value: "SHA256" },
+    ],
   },
 ];

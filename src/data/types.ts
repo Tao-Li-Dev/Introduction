@@ -40,6 +40,21 @@ export type PhyloTracerIO = {
   items: string[];
 };
 
+export type EvidenceMetric = {
+  label: string;
+  value: string;
+};
+
+export type PhyloTracerEvidence = {
+  title: string;
+  description: string;
+  source: string;
+  image?: string;
+  href?: string;
+  linkLabel?: string;
+  metrics?: EvidenceMetric[];
+};
+
 export type MethodCluster = {
   name: string;
   description: string;
